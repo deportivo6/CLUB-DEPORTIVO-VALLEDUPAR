@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Administración</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+   <link rel="stylesheet" href="jugador.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
+     <!-- Favicon para navegadores de escritorio -->
+ <link rel="icon" href="favicon.ico" type="image/x-icon" />
+  
+ <!-- Favicon para dispositivos Apple -->
+ <link rel="apple-touch-icon" href="images/escudo2.png">
+ 
+ <!-- Favicon para dispositivos Android -->
+ <link rel="icon" sizes="192x192" href="images/escudo2.png">
+
+    <style>
+        #partidosList table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+#partidosList th, #partidosList td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+#partidosList th {
+    background-color: #f3f3f3;
+}
+
+
+
+/* Contenedor de la tabla para hacerlo desplazable */
+#partidosList, #playerListForDeletion, #news-list {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin-bottom: 20px;
+}
+
+/* Estilo para la tabla */
+#partidosList table, #playerListForDeletion table, #news-list table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 600px; /* Asegura que la tabla tenga un ancho mínimo, ajustable según el diseño */
+}
+
+/* Estilo para celdas de la tabla */
+#partidosList th, #playerListForDeletion th, #news-list th, 
+#partidosList td, #playerListForDeletion td, #news-list td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+ 
+.container {
+            max-width: 600px;
+            margin-top: 8px; /* Reduje el margen superior */
+        }
+        .input-container {
+            background-color: #fff;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        .btn-custom {
+            background-color: #007bff;
+            color: white;
+        }
+        .btn-custom:hover {
+            background-color: #0056b3;
+        }
+        .form-control {
+            font-size: 16px;
+        }
+
+
+
+        #vault {
+            margin-top: 20px;
+            padding: 20px;
+            display: none;
+            border: 2px solid green;
+            border-radius: 10px;
+            background-color: #f0fdf4;
+            color: #065f46;
+        }
+        #error {
+            color: red;
+            display: none;
+        }
+        .btn-custom2{
+            border-radius: 5%;
+            background-color: #338695;
+
+        }
+        button {
+      padding: 10px 20px;
+      font-size: 16px;
+      color: #fff;
+      background-color: #007BFF;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    /* Estilos del modal */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content {
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      width: 80%;
+      max-width: 500px;
+      text-align: center;
+    }
+
+    .close-btn {
+      margin-top: 15px;
+      padding: 8px 15px;
+      font-size: 14px;
+      color: #fff;
+      background-color: #dc3545;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .close-btn:hover {
+      background-color: #a71d2a;
+    }
+.modal22{
+    text-align: center;
+}
+button.close-btn {
+  background-color: #a71d2a; /* Rojo oscuro */
+  color: #fff; /* Texto blanco */
+  font-size: 16px; /* Tamaño del texto más grande */
+  font-weight: bold; /* Texto en negrita */
+  padding: 12px 18px; /* Tamaño del botón */
+  border: 2px solid #a71d2a; /* Borde grueso y del mismo color */
+  border-radius: 5px; /* Bordes ligeramente redondeados */
+  cursor: pointer; /* Cambia el cursor al pasar por el botón */
+  transition: background-color 0.3s, border-color 0.3s; /* Animación suave al interactuar */
+}
+
+button.close-btn:hover {
+  background-color: #ff4d4d; /* Rojo más brillante al pasar el mouse */
+  border-color: #ff1a1a; /* Borde más claro al pasar el mouse */
+}
+
+    </style>
+</head>
+<body style="background-color: rgb(209, 216, 221);">
+    <!-- Navbar -->
+    <nav class="bg-white shadow-lg" style="background-color: rgb(193, 224, 228);">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <!-- Logo del equipo a la izquierda -->
+                <div class="flex items-center space-x-2">
+                    <img src="images/escudo2.png" alt="Escudo del equipo" class="h-10 w-10">
+                    <a href="#" class="text-2xl font-bold text-gray-800">Admin Panel</a>
+                </div>
+    
+                <!-- Menú de navegación centrado -->
+                <div class="hidden md:block flex-1">
+                    <div class="flex justify-center space-x-4">
+                        <a href="#partidos" class="text-gray-600 hover:bg-gray-200 hover:text-gray-900 px-3 py-2 rounded-md">Partidos</a>
+                        <a href="#jugadores" class="text-gray-600 hover:bg-gray-200 hover:text-gray-900 px-3 py-2 rounded-md">Jugadores</a>
+                        <a href="#noticias" class="text-gray-600 hover:bg-gray-200 hover:text-gray-900 px-3 py-2 rounded-md">Noticias</a>
+                        <a href="index.html" class="text-gray-600 hover:bg-gray-200 hover:text-gray-900 px-3 py-2 rounded-md">inicio</a>
+                        <a href="#" onclick="cerrarSesion()" class="text-red-600 hover:bg-red-100 hover:text-red-900 px-3 py-2 rounded-md">
+                            Cerrar Sesión
+                        </a>
+                    </div>
+                </div>
+    
+                <!-- Foto de perfil a la derecha -->
+                <div class="flex items-center">
+                    <a href="perfil.html" target="_blank">
+                        <img src="images/perfil.jpg" alt="Foto de perfil" class="h-10 w-10 rounded-full">
+                    </a>
+                </div>
+    
+                <!-- Botón para menú móvil -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-button">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    
+        <!-- Menú móvil -->
+        <div id="mobile-menu" class="md:hidden hidden">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#partidos" class="text-gray-600 hover:bg-gray-200 hover:text-gray-900 block px-3 py-2 rounded-md">Partidos</a>
+                <a href="#jugadores" class="text-gray-600 hover:bg-gray-200 hover:text-gray-900 block px-3 py-2 rounded-md">Jugadores</a>
+                <a href="#noticias" class="text-gray-600 hover:bg-gray-200 hover:text-gray-900 block px-3 py-2 rounded-md">Noticias</a>
+                <a href="#" onclick="cerrarSesion()" class="text-red-600 hover:bg-red-100 hover:text-red-900 block px-3 py-2 rounded-md">
+                    Cerrar Sesión
+                </a>
+            </div>
+        </div>
+    </nav><br><br>
+    
+    
+    <div class="modal22">
+        <h1>Manual de Admin</h1>
+        <button id="openModal">Abrir Manual</button>
+      </div>
+    
+      <!-- Modal -->
+      <div class="modal" id="myModal">
+        <div class="modal-content">
+          <h2>Información del Manual</h2>
+          <p>
+            Hola, aquí te daré una breve inducción sobre cómo funciona este panel de admin.
+            Bueno, quizás te estés preguntando cómo subir la foto o cómo funciona el tema de la URL de las fotos. 
+            Primero que todo, para poner la foto de un jugador debes entrar al siguiente enlace: 
+            <a href="https://github.com/login" target="_blank" style="color: #a71d2a;">https://github.com/login</a>
+            e iniciar sesión con la cuenta **usuario**: <strong>deportivo6</strong> **contraseña**: <strong>deportivo_2007</strong>.
+            Una vez iniciada, entra a este enlace: 
+            <a href="https://github.com/deportivo6/-CLUB-DEPORTIVO-VALLEDUPAR/tree/main/img" target="_blank" style="color:#a71d2a ;">
+              https://github.com/deportivo6/-CLUB-DEPORTIVO-VALLEDUPAR/tree/main/img
+            </a>.
+            Allí deberás colocar la imagen que vas a usar, por ejemplo, si es la imagen de un jugador 
+            o de una noticia. Asegúrate de conocer el nombre de la imagen, como "foto1.jpg" o "foto1.png".
+      
+            Después de haber seguido esta serie de pasos, ya podrás agregar un jugador con su foto o una noticia con su foto. 
+            Recuerda que, al agregar una foto en una noticia, debes colocar el nombre de la imagen, por ejemplo, 
+            "img/foto1.jpg" o "img/foto1.png". Lo mismo aplica para la foto de un jugador: "img/fotojugador.jpg". 
+            Esto va en la parte del formulario que dice "URL de foto" o "URL de noticia".
+      
+            Esto es lo más sencillo posible y fácil de entender. Por favor, no compartas esta información.
+            el correo del club lo obtines desbloqueando la la opcio q dice seguridad la contraseña es deportivo2007 no comparta esta contraseña
+          </p>
+          <button class="close-btn" id="closeModal">Cerrar</button>
+        </div>
+      </div>
+      
+    
+    <!-- Contenido Principal -->
+    <div class="container mx-auto px-4 py-8">
+        <h1 class="text-2xl font-bold mb-4">SEGURIDAD </h1><br>
+    <p>Ingresa los datos para desbloquear contraseña de gamil:</p><br>
+    <input type="password" id="password" placeholder="Contraseña">
+    <button   class="btn-custom2"  onclick="unlockVault()">Desbloquear</button><br>
+    <p id="error">Contraseña incorrecta. Inténtalo de nuevo.</p><br>
+    <div id="vault">
+        <h2>correo : deportivovalledupar6@gmail.com</h2>
+        <p>Contraseña: deportivo_2013</p>
+        <p>"NO COMPARTA ESTA CONTRASEÑA CON NADIE. ATENTAMENTE: DEVELOPER"</p>
+    </div>
+        
+        <!-- Sección de Partidos -->
+        <section id="partidos" class="mb-8">
+            <h2 class="text-2xl font-bold mb-4">Agregar Partido</h2><br>
+            <form id="agregarPartidoForm" class="bg-white p-6 rounded-lg shadow-md">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-gray-700 mb-2">Equipo 1</label>
+                        <input type="text" id="equipo1" required class="w-full px-3 py-2 border rounded-md">
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 mb-2">Equipo 2</label>
+                        <input type="text" id="equipo2" required class="w-full px-3 py-2 border rounded-md">
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 mb-2">Fecha</label>
+                        <input type="date" id="fecha" required class="w-full px-3 py-2 border rounded-md">
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 mb-2">Hora</label>
+                        <input type="time" id="hora" required class="w-full px-3 py-2 border rounded-md">
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 mb-2">Categoría</label>
+                        <input type="text" id="categoria" required class="w-full px-3 py-2 border rounded-md">
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 mb-2">Cancha</label>
+                        <input type="text" id="cancha" required class="w-full px-3 py-2 border rounded-md">
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 mb-2">Uniforme</label>
+                        <input type="text" id="uniforme" required class="w-full px-3 py-2 border rounded-md">
+                    </div>
+                </div>
+                <button type="submit" class="mt-4 w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700">
+                    Agregar Partido
+                </button>
+            </form>
+
+            <div class="mt-8">
+                <h3 class="text-2xl font-bold mb-4">Lista de Partidos</h3><br>
+                <div id="partidosList" class="bg-white p-4 rounded-lg shadow-md"></div>
+            </div>
+
+            <div class="mt-8">
+                <h3 class="text-2xl font-bold mb-4">Actualizar Marcador </h3><br>
+                <form id="actualizarMarcadorForm" class="bg-white p-6 rounded-lg shadow-md">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-gray-700 mb-2">ID del Partido</label>
+                            <input type="text" id="partidoId" required class="w-full px-3 py-2 border rounded-md">
+                        </div>
+                        <div>
+                            <label class="block text-gray-700 mb-2">Marcador</label>
+                            <input type="text" id="marcador" required class="w-full px-3 py-2 border rounded-md">
+                        </div>
+                    </div>
+                    <button type="submit" class="mt-4 w-full bg-green-600 text-white py-2 rounded-md hover:bg-green-700">
+                        Actualizar Marcador
+                    </button>
+                </form>
+            </div>
+        </section>
+
+        <!-- Sección de Jugadores -->
+        <section id="jugadores" class="mb-8">
+            <h2 class="text-2xl font-bold mb-4">Agregar Jugador</h2><br>
+            <form id="playerForm" class="bg-white p-6 rounded-lg shadow-md">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <input type="text" id="name" placeholder="Nombre" required class="w-full px-3 py-2 border rounded-md">
+                    <input type="text" id="photo" placeholder="URL de Foto" required class="w-full px-3 py-2 border rounded-md">
+                    <input type="text" id="position" placeholder="Posición" required class="w-full px-3 py-2 border rounded-md">
+                    <input type="number" id="number" placeholder="Número de Camisa" required class="w-full px-3 py-2 border rounded-md">
+                    <select id="category" required class="w-full px-3 py-2 border rounded-md col-span-2">
+                        <option value="">Seleccionar Categoría</option>
+                        <option value="2014">Jugadores | 2014</option>
+                        <option value="2015">Jugadores | 2015</option>
+                        <option value="2016">Jugadores | 2016</option>
+                        <option value="2018">Jugadores | 2018</option>
+                        <option value="sub13a">Jugadores | Sub 13 A</option>
+                        <option value="sub13b">Jugadores | Sub 13 B</option>
+                        <option value="sub15a">Jugadores | Sub 15 A</option>
+                        <option value="sub15b">Jugadores | Sub 15 B</option>
+                        <option value="sub17a">Jugadores | Sub 17 A</option>
+                        <option value="sub17b">Jugadores | Sub 17 B</option>
+                    </select>
+                </div>
+                <button type="submit" class="mt-4 w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700">
+                    Agregar Jugador
+                </button>
+            </form>
+
+            <div class="mt-8">
+                <h3 class="text-2xl font-bold mb-4">Lista de Jugadores</h3>
+                <p class="text-xl font-semibold mb-4">Por favor, actualice la página después de agregar o eliminar un jugador para ver los cambios realizados</p><br><br>
+                <select id="categoryView" class="w-full px-3 py-2 border rounded-md mb-4">
+                    <option value="">Seleccionar Categoría</option>
+                    <option value="2014">Jugadores | 2014</option>
+                    <option value="2015">Jugadores | 2015</option>
+                    <option value="2016">Jugadores | 2016</option>
+                    <option value="2018">Jugadores | 2018</option>
+                    <option value="sub13a">Jugadores | Sub 13 A</option>
+                    <option value="sub13b">Jugadores | Sub 13 B</option>
+                    <option value="sub15a">Jugadores | Sub 15 A</option>
+                    <option value="sub15b">Jugadores | Sub 15 B</option>
+                    <option value="sub17a">Jugadores | Sub 17 A</option>
+                    <option value="sub17b">Jugadores | Sub 17 B</option>
+                </select>
+                <div id="playerListForDeletion" class="bg-white p-4 rounded-lg shadow-md"></div>
+            </div>
+        </section>
+
+        <!-- Sección de Noticias -->
+        <section id="noticias" class="mb-8"><br>
+            <h2 class="text-2xl font-bold mb-4">Administrador de Noticias</h2>
+            <p class="text-xl font-semibold mb-4">para agregar una foto a la noticias poner en el campo de la noticia img/aqui_el_nombre_de_la_foto.jpg "debe agregar antes la imagen a la carpeta img antes" </p><br><br>
+            <form id="news-form" class="bg-white p-6 rounded-lg shadow-md">
+                <div class="grid grid-cols-1 gap-4">
+                    <input type="text" id="news-title" placeholder="Título de la noticia" required class="w-full px-3 py-2 border rounded-md">
+                    <input type="text" id="news-image" placeholder="URL de la imagen" class="w-full px-3 py-2 border rounded-md">
+                    <textarea id="news-text" placeholder="Texto de la noticia" required class="w-full px-3 py-2 border rounded-md h-32"></textarea>
+                    <input type="date" id="news-date" required class="w-full px-3 py-2 border rounded-md">
+                </div>
+                <button type="submit" class="mt-4 w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700">
+                    Guardar Noticia
+                </button>
+                
+            </form><br>
+            <p class="text-2xl font-bold mb-4">Aquí podrás eliminar una noticia por su título</p>
+            <div id="news-list" class="mt-8 bg-white p-4 rounded-lg shadow-md"></div>
+        </section>
+    </div>
+    
+
+
+   <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="script.js"></script>
+    <script>
+        const openModal = document.getElementById('openModal');
+        const closeModal = document.getElementById('closeModal');
+        const modal = document.getElementById('myModal');
+    
+        openModal.addEventListener('click', () => {
+          modal.style.display = 'flex';
+        });
+    
+        closeModal.addEventListener('click', () => {
+          modal.style.display = 'none';
+        });
+    
+        // Cierra el modal al hacer clic fuera del contenido
+        window.addEventListener('click', (event) => {
+          if (event.target === modal) {
+            modal.style.display = 'none';
+          }
+        });
+      </script>
+    <script>
+        checkAuth('admin');
+    </script>
+    <script>
+        // Selecciona el botón del menú de hamburguesa y el menú móvil
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+    
+        // Agrega un evento de clic al botón de hamburguesa
+        mobileMenuButton.addEventListener('click', function() {
+            // Alterna la clase 'hidden' para mostrar/ocultar el menú
+            mobileMenu.classList.toggle('hidden');
+        });
+    </script>
+    <script>
+        
+        const encryptedPassword = "ZGVwb3J0aXZvMjAwNw=="; // Esto es "deportivo2007" en Base64.
+
+        function unlockVault() {
+            const userInput = document.getElementById("password").value;
+
+            // Decodificar la contraseña cifrada
+            const decodedPassword = atob(encryptedPassword);
+
+            // Comparar la entrada del usuario con la contraseña descifrada
+            if (userInput === decodedPassword) {
+                document.getElementById("vault").style.display = "block";
+                document.getElementById("error").style.display = "none";
+            } else {
+                document.getElementById("vault").style.display = "none";
+                document.getElementById("error").style.display = "block";
+            }
+        }
+    </script>
+</body>
+</html>

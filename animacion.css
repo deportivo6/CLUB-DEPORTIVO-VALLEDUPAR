@@ -1,0 +1,26 @@
+/* Clases iniciales para la animación */
+.fade-in-slide {
+    opacity: 0;
+    transform: translateX(-50px); /* Comienza desplazado hacia la izquierda */
+    transition: opacity 1s ease, transform 1s ease;
+  }
+  
+  .fade-in-slide-top {
+    opacity: 0;
+    transform: translateY(-50px); /* Comienza desplazado hacia arriba */
+    transition: opacity 1s ease, transform 1s ease;
+  }
+  
+  .fade-in-slide-right {
+    opacity: 0;
+    transform: translateX(50px); /* Comienza desplazado hacia la derecha */
+    transition: opacity 1s ease, transform 1s ease;
+  }
+  
+  /* Clase para activar la animación */
+  .visible {
+    opacity: 1;
+    transform: translateX(0);
+    transform: translateY(0);
+  }
+  

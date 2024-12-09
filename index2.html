@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Tr-Android</title>
+     <!-- Favicon para navegadores de escritorio -->
+ <link rel="icon" href="favicon.ico" type="image/x-icon" />
+  
+ <!-- Favicon para dispositivos Apple -->
+ <link rel="apple-touch-icon" href="images/escudo2.png">
+ 
+ <!-- Favicon para dispositivos Android -->
+ <link rel="icon" sizes="192x192" href="images/escudo2.png">
+
+    <style>
+        /* Estilo base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: url('fondol.jpg') no-repeat center center fixed;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    color: #fff;
+}
+
+/* Contenedor del login */
+.login-container {
+    background-color: rgba(0, 0, 0, 0.5); /* Fondo semitransparente */
+    width: 100%;
+    max-width: 400px;
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    text-align: center;
+}
+
+/* Encabezado */
+h1 {
+    font-size: 2rem;
+    color: #fff;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+/* Inputs */
+.inputs {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+    color: #333;
+    transition: border 0.3s ease-in-out;
+}
+
+.inputs:focus {
+    border-color: #2980b9;
+    outline: none;
+}
+
+/* Botón */
+.login-btn {
+    width: 100%;
+    padding: 12px;
+    background-color: #2980b9;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.login-btn:hover {
+    background-color: #1f6f9f;
+}
+
+/* Enlaces */
+.forgot-password a,
+.register-text a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.forgot-password a:hover,
+.register-text a:hover {
+    text-decoration: underline;
+}
+
+/* Contenedor de la casilla de "Recordar" */
+.checkbox-container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin-bottom: 15px;
+}
+
+.checkbox-label {
+    margin-left: 5px;
+    font-size: 0.9rem;
+    color: #fff;
+}
+
+/* Formulario de registro oculto */
+.hidden {
+    display: none;
+}
+
+/* Estilos para el select */
+#roleSelect {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+    color: #333;
+}
+
+/* Estilo para el botón de regresar */
+.back-btn {
+    width: 100%;
+    padding: 12px;
+    background-color: #e74c3c;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 20px;
+}
+
+.back-btn:hover {
+    background-color: #c0392b;
+}
+    </style>
+</head>
+<body>
+
+    <div class="login-container">
+        <form id="loginForm">
+            <h1>Iniciar Sesión</h1>
+            <input type="email" class="inputs" id="email" placeholder="Correo Electronico" autocomplete="off">
+            <input type="password" class="inputs" id="password" placeholder="contraseña" required>
+            <div class="checkbox-container">
+                <input type="checkbox" id="remember">
+                <label for="remember" class="checkbox-label">Recordar</label>
+            </div>
+            <div class="forgot-password">
+                <a href="#">¿Olvidaste tu contraseña?</a>
+            </div>
+            <button type="submit" class="login-btn" id="loginButton">Iniciar Sesión</button>
+            <div class="register-text">
+                ¿No tienes cuenta? <a href="#" onclick="toggleForms()">Regístrate</a>
+            </div>
+        </form>
+        
+        <form id="registerForm" class="hidden">
+            <h1>Registrate</h1>
+            <input type="text" class="inputs" id="full_name" placeholder="Nombre" required autocomplete="off">
+            <input type="email" class="inputs" id="emailR" placeholder="Correo Electronico" autocomplete="off">
+            <input type="password" class="inputs" id="passwordR" placeholder="Contraseña" required>
+            <select id="roleSelect" class="inputs">
+                <option value="user">Usuario</option>
+                
+            </select>
+            <button type="submit" class="login-btn" id="registerButton">Registrar</button>
+            <div class="register-text">
+                ¿Ya tienes cuenta? <a href="#" onclick="toggleForms()">Iniciar Sesión</a>
+            </div>
+        </form>
+
+        <!-- Botón de regresar, que aparece al final -->
+        <button onclick="window.history.back();" class="back-btn">Regresar</button>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="script.js"></script>
+    
+    <script>
+        function toggleForms() {
+            var loginForm = document.getElementById("loginForm");
+            var registerForm = document.getElementById("registerForm");
+
+            if (loginForm.classList.contains("hidden")) {
+                loginForm.classList.remove("hidden");
+                registerForm.classList.add("hidden");
+            } else {
+                loginForm.classList.add("hidden");
+                registerForm.classList.remove("hidden");
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Perfil</title>
+    <link rel="stylesheet" href="perfil.css">
+     <!-- Favicon para navegadores de escritorio -->
+ <link rel="icon" href="favicon.ico" type="image/x-icon" />
+  
+ <!-- Favicon para dispositivos Apple -->
+ <link rel="apple-touch-icon" href="images/escudo2.png">
+ 
+ <!-- Favicon para dispositivos Android -->
+ <link rel="icon" sizes="192x192" href="images/escudo2.png">
+
+    <style>
+   body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f7fa;
+    margin: 0;
+    padding: 0;
+}
+
+/* Contenedor del perfil */
+/* Contenedor de la imagen de perfil */
+.perfil-img-container {
+    width: 100%;
+    height: 200px; /* Ajusta la altura según lo necesites */
+    overflow: hidden;  /* Asegura que la imagen no se salga del contenedor */
+    border-radius: 8px;
+    margin-bottom: 20px; /* Espacio debajo de la imagen */
+}
+
+/* Estilo de la imagen de perfil */
+/* Estilo de la imagen de perfil */
+.perfil-img {
+    width: 150px; /* Ajusta el tamaño de la imagen */
+    height: 150px; /* La altura debe ser igual al ancho para que sea redonda */
+    object-fit: cover;  /* Asegura que la imagen cubra completamente el área */
+    border-radius: 50%;  /* Hace la imagen redonda */
+    margin: 0 auto; /* Centra la imagen si es necesario */
+    display: block;
+}
+
+
+/* Estilos para el perfil en pantallas pequeñas (móviles) */
+@media (max-width: 480px) {
+    .perfil-img-container {
+        height: 300px; /* Puedes ajustar la altura de la imagen en móviles */
+    }
+
+    .perfil-img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+}
+
+/* Títulos y textos */
+h1 {
+    text-align: center;
+    color: #2d3748;
+    font-size: 2rem;
+}
+
+h2 {
+    color: #4a5568;
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+}
+
+p {
+    color: #4a5568;
+    font-size: 1rem;
+    margin-bottom: 10px;
+}
+
+/* Botones */
+.perfil-container button {
+    width: 100%;
+    padding: 10px;
+    background-color: #3182ce;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+    margin-top: 10px;
+    transition: background-color 0.3s ease;
+}
+
+.perfil-container button:hover {
+    background-color: #2b6cb0;
+}
+
+#adminPanelButton {
+    background-color: #48bb78;
+}
+
+#adminPanelButton:hover {
+    background-color: #38a169;
+}
+
+#adminPanelButton:focus {
+    outline: none;
+}
+
+/* Media query para dispositivos móviles */
+@media (max-width: 768px) {
+    .perfil-img {
+        height: 300px;  /* Aumenta la altura de la imagen en pantallas más pequeñas */
+    }
+}
+
+@media (max-width: 480px) {
+    .perfil-img {
+        height: 250px;  /* Ajuste para pantallas muy pequeñas */
+    }
+}
+
+    </style>
+</head>
+<body>
+
+    <div class="perfil-container">
+        
+        <div id="perfilUsuario">
+            <!-- Contenedor de la imagen de perfil -->
+            <div class="perfil-img-container">
+                <img src="images/perfil.jpg" alt="Foto de perfil" class="perfil-img">
+            </div>
+            <h1>Mi Perfil</h1>
+            <h2>Datos de Usuario</h2>
+            <p>Nombre: <span id="nombrePerfil"></span></p>
+            <p>Email: <span id="emailPerfil"></span></p>
+            <p>Rango: <span id="rangoPerfil"></span></p>
+            <button onclick="cerrarSesion()">Cerrar Sesión</button>
+            <button onclick="window.history.back()">Regresar</button>
+            <button id="adminPanelButton" style="display: none;" onclick="irAPanelAdmin()">Ir a Panel de Admin</button>
+        </div>
+    </div>
+    
+    <!-- Incluir scripts de Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="script.js"></script>
+    <script>
+        auth.onAuthStateChanged((user) => {
+            if (user) {
+                var userRef = database.ref('users/' + user.uid);
+                userRef.once('value').then(function(snapshot) {
+                    var userData = snapshot.val();
+                    
+                    // Mostrar los datos obtenidos
+                    document.getElementById('nombrePerfil').textContent = userData.full_name || 'No disponible';
+                    document.getElementById('emailPerfil').textContent = user.email || 'No disponible';
+                    document.getElementById('rangoPerfil').textContent = userData.role || 'No disponible';
+
+                    // Mostrar el botón solo si el usuario es admin
+                    if (userData.role === 'admin') {
+                        document.getElementById('adminPanelButton').style.display = 'block';
+                    }
+                });
+            } else {
+                // No hay usuario logueado, redirigir a index
+                window.location.href = 'index.html';
+            }
+        });
+
+        function irAPanelAdmin() {
+            window.location.href = 'admin.html'; // Cambiado a admin.html
+        }
+
+        function cerrarSesion() {
+            auth.signOut().then(() => {
+                window.location.href = 'index.html';
+            });
+        }
+    </script>
+    
+</body>
+</html>

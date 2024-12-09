@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Soccer &mdash; Website by Colorlib</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="fonts/icomoon/style.css">
+  <link rel="stylesheet" href="css/bootstrap/bootstrap.css">
+  <link rel="stylesheet" href="css/jquery-ui.css">
+  <link rel="stylesheet" href="css/owl.carousel.min.css">
+  <link rel="stylesheet" href="css/owl.theme.default.min.css">
+  <link rel="stylesheet" href="css/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="css/bootstrap-datepicker.css">
+  <link rel="stylesheet" href="fonts/flaticon/font/flaticon.css">
+  <link rel="stylesheet" href="css/aos.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="menuv.css">
+  <style>
+      .form-container {
+        display: flex;
+justify-content: center;
+align-items: center;
+height: 100vh;
+margin: 0;
+
+            
+        }
+
+        .form-container h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            font-weight: bold;
+        }
+
+        input, textarea, button {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: none;
+            outline: none;
+            margin-bottom: 15px;
+            background-color: #f0f0f0;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        input:focus, textarea:focus {
+            background-color: #e6f7ff;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+        }
+
+        textarea {
+            resize: none;
+        }
+
+        button {
+            background-color: #007BFF;
+            color: #fff;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f0f0;
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 15px;
+            margin-top: 50px;
+            padding: 0 15px;
+        }
+
+        .gallery img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+            transition: transform 0.3s ease;
+            cursor: pointer;
+        }
+
+        .gallery img:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .modal-content {
+            background-color: #222;
+            color: #fff;
+            padding: 0;
+            border-radius: 10px;
+        }
+
+        .modal-header, .modal-footer {
+            border: none;
+        }
+
+        .modal-body {
+            text-align: center;
+            padding: 0;
+        }
+
+        .modal-body img {
+            width: 100%;
+            height: auto;
+            max-height: 90vh;
+            object-fit: contain;
+        }
+
+        .close-modal {
+            font-size: 30px;
+            color: white;
+            cursor: pointer;
+            position: absolute;
+            top: 10px;
+            right: 20px;
+        }
+
+        .close-modal:hover {
+            color: #ff4757;
+        }
+
+        .prev, .next {
+            font-size: 24px;
+            color: white;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+        }
+
+        .prev {
+            left: 10px;
+        }
+
+        .next {
+            right: 10px;
+        }
+
+        .prev:hover, .next:hover {
+            color: #ff4757;
+        }
+
+        /* Mejorar visibilidad en pantallas grandes */
+        @media (max-width: 1200px) {
+            .gallery img {
+                height: 250px;
+                object-fit: cover;
+            }
+        }
+
+        /* Para dispositivos pequeños */
+        @media (max-width: 768px) {
+            .gallery img {
+                height: 200px;
+            }
+        }
+    
+  </style>
+</head>
+
+<body>
+
+  <div class="site-wrap">
+
+    <div class="site-mobile-menu site-navbar-target">
+      <div class="site-mobile-menu-header">
+        <div class="site-mobile-menu-close">
+          <span class="icon-close2 js-menu-toggle"></span>
+        </div>
+      </div>
+      <div class="site-mobile-menu-body"></div>
+    </div>
+
+    <header class="site-navbar py-4" role="banner">
+      <div class="container">
+        <div class="d-flex align-items-center">
+          <div class="site-logo">
+            <a href="index.html">
+              <h1>DPV</h1>
+            </a>
+          </div>
+          <div class="ml-auto">
+            <nav class="site-navigation position-relative text-right" role="navigation">
+              <ul class="site-menu main-menu js-clone-nav mr-auto d-none d-lg-block">
+                <li><a href="index.html" class="nav-link">Inicio</a></li>
+                <li><a href="partidos.html" class="nav-link">Partidos</a></li>
+                <li><a href="jugadores.html" class="nav-link">Jugadores</a></li>
+                <li><a href="noticias.html" class="nav-link">Noticias</a></li>
+                <li class="active"><a href="contact.html" class="nav-link">Contáctanos</a></li>
+                <li><a href="nosotros.html" class="nav-link">nosotros</a></li>
+                <!-- Enlaces del sistema de login -->
+                <li id="loginRegisterLinks">
+                  <a href="index2.html" onclick="toggleForms()">Iniciar Sesión</a>
+                  <a href="index2.html" onclick="toggleForms()">Registrarse</a>
+                </li>
+                <li id="perfilLink" style="display:none;">
+                  <a href="perfil.html">
+                    <i class="icono-perfil"></i> Mi Perfil
+                  </a>
+                </li>
+              </ul>
+            </nav>
+            <a href="#" class="d-inline-block d-lg-none site-menu-toggle js-menu-toggle text-black float-right text-white">
+              <span class="icon-menu h3 text-white"></span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div class="hero">
+      <video 
+        autoplay 
+        muted 
+        loop 
+        id="background-video" 
+        style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: -1;">
+        <source src="video1.mp4" type="video/mp4">
+        Tu navegador no soporta el elemento de video.
+      </video>
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="col-lg-5 mx-auto text-center">
+            <h1 class="text-white">Club Deportivo Valledupar</h1>
+            <p>El equipo de todos</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <script src="fondo.js"></script>
+    <!-- Contenido del formulario de contacto -->
+    
+      <div class="form-container">
+        <h1>Contáctanos</h1>
+        <form action="https://formspree.io/f/your_form_id" method="POST">
+            <label for="name">Nombre completo:</label>
+            <input type="text" id="name" name="nombre" placeholder="Escribe tu nombre" required>
+
+            <label for="phone">Número de teléfono:</label>
+            <input type="tel" id="phone" name="telefono" placeholder="Escribe tu número" required>
+
+            <label for="email">Correo electrónico:</label>
+            <input type="email" id="email" name="correo" placeholder="Escribe tu correo" required>
+
+            <label for="message">¿Cuál es su problema?</label>
+            <textarea id="message" name="mensaje" rows="4" placeholder="Describe tu problema aquí..." required></textarea>
+
+            <button type="submit">Enviar</button>
+        </form>
+    </div>
+  
+<div class="container">
+    <h1 class="text-center my-5">Galería Épica</h1>
+
+    <div class="gallery">
+        <!-- Imagenes de la galería -->
+        <img src="https://via.placeholder.com/800x600?text=Imagen+1" alt="Imagen 1" class="gallery-item">
+        <img src="https://via.placeholder.com/800x600?text=Imagen+2" alt="Imagen 2" class="gallery-item">
+        <img src="https://via.placeholder.com/800x600?text=Imagen+3" alt="Imagen 3" class="gallery-item">
+        <img src="https://via.placeholder.com/800x600?text=Imagen+4" alt="Imagen 4" class="gallery-item">
+        <img src="https://via.placeholder.com/800x600?text=Imagen+5" alt="Imagen 5" class="gallery-item">
+        <img src="https://via.placeholder.com/800x600?text=Imagen+6" alt="Imagen 6" class="gallery-item">
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-body">
+                <span class="close-modal" id="closeModal">&times;</span>
+                <img src="" id="modalImage" alt="Imagen modal">
+                <span class="prev" id="prevBtn">&lt;</span>
+                <span class="next" id="nextBtn">&gt;</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <footer class="footer-section">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-3">
+            <div class="widget mb-3">
+              <h3>Otros</h3>
+              <ul class="list-unstyled links">
+                <li><a href="players.html">Jugadores</a></li>
+                <li><a href="contact.html">Contactanos</a></li>
+                <li><a href="single.html">Únete</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-lg-3">
+            <div class="widget mb-3">
+              <h3>Partidos</h3>
+              <ul class="list-unstyled links">
+                <li><a href="matches.html">Partidos</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-lg-3">
+            <div class="widget mb-3">
+              <h3>Redes Sociales</h3>
+              <ul class="list-unstyled links">
+                <li><a href="https://www.facebook.com/Deportivovalledupar?mibextid=ZbWKwL">Facebook</a></li>
+                <li><a href="https://www.instagram.com/club_deportivo_valledupar_?igsh=cGZvaWh2NWRmamlj">Instagram</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="row text-center">
+          <div class="col-md-12">
+            <div class="pt-5">
+              <p>
+                <script>
+                  document.write(new Date().getFullYear());
+                </script> El Equipo De Todos.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </div>
+  <!-- Firebase Scripts -->
+  <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
+  <script src="script.js"></script>
+  <script src="menuv.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    let currentImageIndex = 0;
+    const images = document.querySelectorAll('.gallery-item');
+    const modalImage = document.getElementById('modalImage');
+    const closeModal = document.getElementById('closeModal');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const imageModal = new bootstrap.Modal(document.getElementById('imageModal'));
+
+    images.forEach((image, index) => {
+        image.addEventListener('click', function() {
+            currentImageIndex = index;
+            modalImage.src = image.src;
+            imageModal.show();
+        });
+    });
+
+    closeModal.addEventListener('click', () => {
+        imageModal.hide();
+    });
+
+    prevBtn.addEventListener('click', () => {
+        currentImageIndex = (currentImageIndex === 0) ? images.length - 1 : currentImageIndex - 1;
+        modalImage.src = images[currentImageIndex].src;
+    });
+
+    nextBtn.addEventListener('click', () => {
+        currentImageIndex = (currentImageIndex === images.length - 1) ? 0 : currentImageIndex + 1;
+        modalImage.src = images[currentImageIndex].src;
+    });
+</script>
+  <script>
+    // Verificar el estado de autenticación
+    auth.onAuthStateChanged((user) => {
+      const loginRegisterLinks = document.getElementById('loginRegisterLinks');
+      const perfilLink = document.getElementById('perfilLink');
+
+      if (user) {
+        loginRegisterLinks.style.display = 'none';
+        perfilLink.style.display = 'block';
+      } else {
+        loginRegisterLinks.style.display = 'block';
+        perfilLink.style.display = 'none';
+      }
+    });
+  </script>
+</body>
+</html>

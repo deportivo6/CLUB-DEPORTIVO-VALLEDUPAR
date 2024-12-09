@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Noticias</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="fonts/icomoon/style.css">
+  <link rel="stylesheet" href="css/bootstrap/bootstrap.css">
+  <link rel="stylesheet" href="css/jquery-ui.css">
+  <link rel="stylesheet" href="css/owl.carousel.min.css">
+  <link rel="stylesheet" href="css/owl.theme.default.min.css">
+  <link rel="stylesheet" href="css/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="css/bootstrap-datepicker.css">
+  <link rel="stylesheet" href="fonts/flaticon/font/flaticon.css">
+  <link rel="stylesheet" href="css/aos.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="menuv.css">
+  <link rel="stylesheet" href="animacion.css">
+   <!-- Favicon para navegadores de escritorio -->
+ <link rel="icon" href="favicon.ico" type="image/x-icon" />
+  
+ <!-- Favicon para dispositivos Apple -->
+ <link rel="apple-touch-icon" href="images/escudo2.png">
+ 
+ <!-- Favicon para dispositivos Android -->
+ <link rel="icon" sizes="192x192" href="images/escudo2.png">
+
+    <style>
+
+.escudo {
+  position: relative; /* Define una posición relativa al contenedor del escudo */
+  z-index: 2; /* Asegúrate de que tenga un z-index mayor que el de la sombra */
+  width: 150px; /* Mantén su tamaño actual */
+  height: auto;
+}
+
+.hero .container {
+  position: relative; /* Asegura que la posición sea relativa al contenedor del héroe */
+  margin-top: -200px; /* Ajusta este valor para mover las letras más arriba */
+  z-index: 1; /* Asegura que esté encima del video */
+}
+#news-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Dos columnas para dispositivos grandes */
+    gap: 70px; /* Aumentar el espacio entre las noticias (vertical y horizontal) */
+    margin-top: 20px;
+    justify-items: center; /* Centra las noticias dentro de cada columna */
+}
+
+/* Estilo de cada noticia */
+.noticia {
+    background: #ffffff;
+    border: 1px solid #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgb(255, 255, 255);
+    overflow: hidden;
+    padding: 20px; /* Más padding dentro de las noticias */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: auto;
+    max-width: 600px; /* Aumenté el tamaño de las noticias */
+    margin: 30px auto; /* Mayor separación entre las noticias */
+    width: 100%; /* Asegura que la noticia no se salga en pantallas pequeñas */
+}
+
+/* Estilo de la imagen dentro de la noticia */
+.noticia img {
+    width: 100%; /* Ajuste al 100% para evitar desbordamientos */
+    height: auto;
+    margin: 0 auto 15px;
+    display: block;
+    border-radius: 8px;
+}
+
+/* Centrado del título, texto y la fecha */
+.noticia h2 {
+    font-size: 1.8em; /* Títulos un poco más grandes */
+    color: #000000;
+    margin: 10px 0;
+    text-align: center;
+}
+
+.noticia p {
+    font-size: 1.1em; /* Texto más grande */
+    color: #000000;
+    margin: 10px 0;
+    line-height: 1.6;
+    text-align: center;
+    word-wrap: break-word;
+}
+
+/* Fecha alineada a la derecha */
+.noticia small {
+    font-size: 1em;
+    color: #000000;
+    display: block;
+    margin-top: 10px;
+    text-align: right;
+}
+
+/* Estilos para móviles: Una sola columna */
+@media (max-width: 767px) {
+    #news-container {
+        grid-template-columns: 1fr; /* Una columna en dispositivos móviles */
+        padding: 0 10px; /* Agregar padding para evitar que el contenido toque los bordes */
+    }
+
+    .noticia {
+        max-width: 100%; /* Aseguramos que las noticias ocupen todo el ancho disponible */
+        margin: 10px 0; /* Espacio entre las noticias */
+    }
+}
+/* Estilo para el contenedor del botón de "Me gusta" */
+.like-btn {
+    background-color: #ff4757;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 15px;
+    cursor: pointer;
+    font-size: 16px;
+    display: inline-block;
+    margin-top: 10px;
+}
+
+.like-btn:hover {
+    background-color: #e84118;
+}
+
+.like-count {
+    font-weight: bold;
+}
+
+
+    #background-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -1; /* Asegura que el video esté detrás del contenido */
+}
+
+
+.heart-animation {
+    position: relative;
+    height: 0;
+    width: 0;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.heart-animation.show {
+    position: absolute;
+    top: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    height: 30px;
+    width: 30px;
+    background: url('https://w7.pngwing.com/pngs/820/953/png-transparent-love-hearts-love-hearts-red-heart-love-heart-computer-icons.png') no-repeat center center;
+    background-size: cover;
+    opacity: 1;
+    animation: floatUp 1s ease-in-out forwards;
+}
+
+@keyframes floatUp {
+    0% {
+        transform: translate(-50%, 0);
+    }
+    100% {
+        transform: translate(-50%, -50px);
+        opacity: 0;
+    }
+}
+
+
+
+
+
+#chatbot-button {
+  position: fixed;
+  bottom: 100px;
+  left: 10px;  /* Reducir el valor de 'right' */
+  background-color: #bc2414;
+  color: white;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+  cursor: pointer;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+}
+
+#chatbot-container {
+  position: fixed;
+  bottom: 20px;
+  left: 50px;  /* Reducir el valor de 'right' */
+  width: 300px;
+  height: 400px;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  display: none;
+  flex-direction: column;
+  z-index: 999;
+}
+
+
+    #chatbot-header {
+      background-color: #bc2414;
+      color: white;
+      padding: 10px;
+      text-align: center;
+      font-size: 18px;
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    #chatbot-body {
+      flex: 1;
+      padding: 10px;
+      overflow-y: auto;
+    }
+
+    #chatbot-input {
+      display: flex;
+      padding: 10px;
+    }
+
+    #chatbot-input input {
+      flex: 1;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    #chatbot-input button {
+      padding: 8px 12px;
+      margin-left: 8px;
+      background-color: #bc2414;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    #chatbot-input button:hover {
+      background-color: #bc2414;
+    }
+
+    #close-chatbot {
+      background-color: transparent;
+      border: none;
+      color: white;
+      font-size: 20px;
+      cursor: pointer;
+    }
+
+    #close-chatbot:hover {
+      color: #ddd;
+    }
+
+    .question-btn {
+      margin: 5px 0;
+      padding: 8px;
+      background-color: #bc2414;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      width: 100%;
+      text-align: left;
+    }
+
+    .question-btn:hover {
+      background-color: #bc2414;
+    }
+/* Estilo para el contenedor de los mensajes */
+#chatbot-body {
+  flex: 1;
+  padding: 10px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px; /* Espacio entre los mensajes */
+}
+
+/* Estilo para los mensajes del usuario */
+.user-message {
+  align-self: flex-start; /* Alinea el mensaje a la izquierda */
+  background-color: #e0f7fa; /* Color de fondo del mensaje del usuario */
+  color: #bc2414; /* Color del texto */
+  padding: 10px;
+  border-radius: 10px;
+  max-width: 80%; /* Limita el tamaño del mensaje */
+  word-wrap: break-word;
+  font-size: 16px;
+  margin-bottom: 5px; /* Espacio inferior entre mensajes */
+}
+
+/* Estilo para los mensajes del bot */
+.bot-message {
+  align-self: flex-end; /* Alinea el mensaje a la derecha */
+  background-color: #c8e6c9; /* Color de fondo del mensaje del bot */
+  color: #bc2414; /* Color del texto */
+  padding: 10px;
+  border-radius: 10px;
+  max-width: 80%; /* Limita el tamaño del mensaje */
+  word-wrap: break-word;
+  font-size: 16px;
+  margin-bottom: 5px; /* Espacio inferior entre mensajes */
+}
+
+/* Estilo para los nombres de los participantes */
+.user-name {
+  font-weight: bold;
+  color: #bc2414;
+}
+
+.bot-name {
+  font-weight: bold;
+  color: #bc2414;
+}
+
+/* Opcional: Estilo para mostrar los nombres de usuario y bot en la parte superior */
+.message-header {
+  font-size: 14px;
+  margin-bottom: 5px;
+}
+
+
+.shadow-container {
+  position: absolute; /* Posición absoluta para que lo puedas mover */
+  top: 0; /* Ajusta según necesites */
+  left: 0;
+  width: 100%; /* Cubre todo el ancho */
+  height: 100%; /* Cubre todo el alto */
+  background-color: rgba(255, 0, 0, 0.5); /* Sombra roja semitransparente */
+  pointer-events: none; /* Permite que los clics pasen al contenido debajo */
+  z-index: 1; /* Ajusta para que quede encima del video */
+}
+
+    </style>
+</head>
+<body style="background-color: white;">
+  <div class="site-wrap">
+
+    <div class="site-mobile-menu site-navbar-target">
+      <div class="site-mobile-menu-header">
+        <div class="site-mobile-menu-close">
+          <span class="icon-close2 js-menu-toggle"></span>
+        </div>
+      </div>
+      <div class="site-mobile-menu-body"></div>
+    </div>
+
+    <header class="site-navbar py-4" role="banner">
+      <div class="container">
+        <div class="d-flex align-items-center">
+          <div class="site-logo">
+            <a href="index.html">
+              <h1></h1>
+            </a>
+          </div>
+          <div class="ml-auto">
+            <nav class="site-navigation position-relative text-right" role="navigation">
+              <ul class="site-menu main-menu js-clone-nav mr-auto d-none d-lg-block">
+                <li><a href="index.html" class="nav-link">Inicio</a></li>
+                <li><a href="partidos.html" class="nav-link">Partidos</a></li>
+                <li><a href="jugadores.html" class="nav-link">Jugadores</a></li>
+                <li class="active"><a href="noticias.html" class="nav-link">Noticias</a></li>
+                <li ><a href="galeria.html" class="nav-link">Galeria</a></li>
+                <li><a href="nosotros.html" class="nav-link">nosotros</a></li>
+                <!-- Enlaces del sistema de login -->
+                <li id="loginRegisterLinks">
+                  <a href="index2.html" onclick="toggleForms()">Iniciar Sesión</a>
+                  <a href="index2.html" onclick="toggleForms()">Registrarse</a>
+                </li>
+                <li id="perfilLink" style="display:none;">
+                  <a href="perfil.html">
+                    <i class="icono-perfil"></i> Mi Perfil
+                  </a>
+                </li>
+              </ul>
+            </nav>
+            <a href="#" class="d-inline-block d-lg-none site-menu-toggle js-menu-toggle text-black float-right text-white">
+              <span class="icon-menu h3 text-white"></span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div class="hero fade-in-slide">
+      <video autoplay muted loop id="background-video" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: -1;">
+        <source src="video1.mp4" type="video/mp4">
+        Tu navegador no soporta el elemento de video.
+      </video>
+      
+      <!-- Escudo al final del video -->
+      <div class="escudo-container fade-in-slide-top">
+        <img src="images/escudo2.png" alt="Escudo" class="escudo">
+      </div>
+    
+      <div class="container fade-in-slide">
+        <div class="row align-items-center fade-in-slide-top">
+          <div class="col-lg-5 mx-auto text-center">
+            <h1 class="text-white">Noticias</h1>
+            <p>Nuestras noticias</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    
+    <script src="fondo.js"></script>
+    
+    <div class="shadow-container"></div>
+
+    <div class="site-section  text-white fade-in-slide" style="background-color:  #bc2414 ;">
+      <div class="container text-center">
+        <h2 class="heading fade-in-slide-top">El Equipo de Todos</h2>
+        <p class="mb-4 fade-in-slide">
+          Desde 2013, el Club Deportivo Valledupar se ha convertido en un símbolo de esfuerzo, pasión y orgullo para nuestra comunidad. ¡Juntos somos más fuertes!
+        </p>
+        <p> inicia Sesión para dar like o registrate es gratis</p>
+        <a href="nosotros.html" class="btn btn-outline-light fade-in-slide-right">Conoce más sobre nosotros</a>
+      </div>
+    </div>
+    
+
+    <main>
+      <!-- Botón flotante para abrir el chat -->
+      <div id="chatbot-button">💬</div>
+    
+      <!-- Contenedor del chatbot -->
+      <div id="chatbot-container">
+        <div id="chatbot-header">
+          <h2>DPV.BOT</h2>
+          <button id="close-chatbot">X</button>
+        </div>
+        <div id="chatbot-body">
+          <div id="predefined-questions">
+            <button class="question-btn" onclick="answerQuestion('¿Cómo puedo unirme al equipo?')">como puedo unirme al equipo?</button>
+            <button class="question-btn" onclick="answerQuestion('¿Dónde practica el Deportivo Valledupar?')">¿Dónde practica el Deportivo Valledupar?</button>
+            <button class="question-btn" onclick="answerQuestion('cuantas categorias hay?')">¿cuantas categorias hay en el equipo?</button>
+            <button class="question-btn" onclick="answerQuestion('¿donde esta la oficina de deportivo valledupar?')">¿Dónde esta la ofina de deportivo valledupar</button>
+          </div>
+          <div id="chat-response"></div>
+        </div>
+        <div id="chatbot-input">
+          <input type="text" id="user-input" placeholder="Escribe tu pregunta...">
+          <button id="send-btn">Enviar</button>
+        </div>
+      </div>
+    </main>
+
+
+
+    <h1 style="text-align: center; color: black;" class="fade-in-slide">Nuestras Noticias</h1>
+
+<div id="news-container" class="fade-in-slide-top">
+    <!-- Aquí se generarán dinámicamente las noticias -->
+</div>
+
+
+    <footer class="footer-section">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-3 col-md-6 mb-4">
+            <div class="widget">
+              <h3>Otros</h3>
+              <ul class="list-unstyled links">
+                <li><a href="players.html">Jugadores</a></li>
+                <li><a href="contact.html">Contáctanos</a></li>
+                <li><a href="single.html">Únete</a></li>
+              </ul>
+            </div>
+          </div>
+    
+          <div class="col-lg-3 col-md-6 mb-4">
+            <div class="widget">
+              <h3>Partidos</h3>
+              <ul class="list-unstyled links">
+                <li><a href="matches.html">Partidos</a></li>
+              </ul>
+            </div>
+          </div>
+    
+          <div class="col-lg-3 col-md-6 mb-4">
+            <div class="widget">
+              <h3>Redes Sociales</h3>
+              <ul class="list-unstyled social-links">
+                <li><a href="https://www.facebook.com/Deportivovalledupar?mibextid=ZbWKwL"><i class="fab fa-facebook-f"></i> Facebook</a></li>
+                <li><a href="https://www.instagram.com/club_deportivo_valledupar_?igsh=cGZvaWh2NWRmamlj"><i class="fab fa-instagram"></i> Instagram</a></li>
+              </ul>
+            </div>
+          </div>
+    
+          <div class="col-lg-3 col-md-6 mb-4">
+            <div class="widget">
+              <img src="images/escudo2.png" alt="Logo" class="footer-logo">
+            </div>
+          </div>
+        </div>
+    
+        <div class="row text-center">
+          <div class="col-md-12">
+            <div class="pt-5">
+              <p>
+                <script>
+                  document.write(new Date().getFullYear());
+                </script> El Equipo De Todos.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+    <style>
+      .footer-section {
+      background-color: #2C3E50; /* Fondo oscuro para el pie de página */
+      color: white; /* Texto blanco */
+      padding: 40px 0; /* Espaciado superior e inferior */
+    }
+    
+    .footer-section .widget h3 {
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+    
+    .footer-section .links li {
+      margin-bottom: 10px;
+    }
+    
+    .footer-section .links a {
+      color: #ecf0f1;
+      text-decoration: none;
+    }
+    
+    .footer-section .links a:hover {
+      color: #f39c12;
+    }
+    
+    .footer-section .social-links li {
+      margin-bottom: 10px;
+    }
+    
+    .footer-section .social-links a {
+      color: #ecf0f1;
+      text-decoration: none;
+      font-size: 18px;
+    }
+    
+    .footer-section .social-links a:hover {
+      color: #f39c12;
+    }
+    
+    .footer-section .footer-logo {
+      max-width: 120px; /* Ajusta el tamaño del logo */
+      display: block;
+      margin: 0 auto;
+    }
+    
+    @media (max-width: 991px) {
+      .footer-section .row {
+        flex-direction: column;
+      }
+    }
+    
+    @media (max-width: 767px) {
+      .footer-section .widget {
+        text-align: center;
+      }
+    
+      .footer-section .footer-logo {
+        margin: 20px auto;
+      }
+    }
+    
+    </style>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
+    <script src="script.js"></script>
+    <script src="menuv.js"></script>
+    <script src="chat.js"></script>
+    <script src="animacion.js"></script>
+    <script>
+      // Verificar el estado de autenticación
+      auth.onAuthStateChanged((user) => {
+        const loginRegisterLinks = document.getElementById('loginRegisterLinks');
+        const perfilLink = document.getElementById('perfilLink');
+  
+        if (user) {
+          loginRegisterLinks.style.display = 'none';
+          perfilLink.style.display = 'block';
+        } else {
+          loginRegisterLinks.style.display = 'block';
+          perfilLink.style.display = 'none';
+        }
+      });
+    </script>
+    <!--me gustas-->
+   
+</body>
+</html>

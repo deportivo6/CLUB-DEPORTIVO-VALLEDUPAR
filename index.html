@@ -1,0 +1,933 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>DEPORTIVO-INICIO</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/css/bootstrap.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="fonts/icomoon/style.css">
+  <link rel="stylesheet" href="css/bootstrap/bootstrap.css">
+  <link rel="stylesheet" href="css/jquery-ui.css">
+  <link rel="stylesheet" href="css/owl.carousel.min.css">
+  <link rel="stylesheet" href="css/owl.theme.default.min.css">
+  <link rel="stylesheet" href="css/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="css/bootstrap-datepicker.css">
+  <link rel="stylesheet" href="fonts/flaticon/font/flaticon.css">
+  <link rel="stylesheet" href="css/aos.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/videos.css">
+  <link rel="stylesheet" href="menuv.css">
+  <link rel="stylesheet" href="animacion.css">
+  <link rel="manifest" href="/manifest.json">
+
+  
+ <!-- Favicon para navegadores de escritorio -->
+ <link rel="icon" href="favicon.ico" type="image/x-icon" />
+  
+ <!-- Favicon para dispositivos Apple -->
+ <link rel="apple-touch-icon" href="images/escudo2.png">
+ 
+ <!-- Favicon para dispositivos Android -->
+ <link rel="icon" sizes="192x192" href="images/escudo2.png">
+
+
+  <style>
+.escudo {
+  position: relative; /* Define una posición relativa al contenedor del escudo */
+  z-index: 2; /* Asegúrate de que tenga un z-index mayor que el de la sombra */
+  width: 150px; /* Mantén su tamaño actual */
+  height: auto;
+}
+
+
+#background-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -1; /* Video en el fondo */
+}
+
+.hero .container {
+  position: relative; /* Asegura que la posición sea relativa al contenedor del héroe */
+  margin-top: -200px; /* Ajusta este valor para mover las letras más arriba */
+  z-index: 1; /* Asegura que esté encima del video */
+}
+
+#chatbot-button {
+  position: fixed;
+  bottom: 100px;
+  left: 10px;  /* Reducir el valor de 'right' */
+  background-color: #bc2414;
+  color: white;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+  cursor: pointer;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+}
+
+#chatbot-container {
+  position: fixed;
+  bottom: 100px;
+  left: 50px;  /* Reducir el valor de 'right' */
+  width: 300px;
+  height: 400px;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  display: none;
+  flex-direction: column;
+  z-index: 999;
+}
+
+
+    #chatbot-header {
+      background-color: #bc2414;
+      color: white;
+      padding: 10px;
+      text-align: center;
+      font-size: 18px;
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    #chatbot-body {
+      flex: 1;
+      padding: 10px;
+      overflow-y: auto;
+    }
+
+    #chatbot-input {
+      display: flex;
+      padding: 10px;
+    }
+
+    #chatbot-input input {
+      flex: 1;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    #chatbot-input button {
+      padding: 8px 12px;
+      margin-left: 8px;
+      background-color: #bc2414;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    #chatbot-input button:hover {
+      background-color: #bc2414;
+    }
+
+    #close-chatbot {
+      background-color: transparent;
+      border: none;
+      color: white;
+      font-size: 20px;
+      cursor: pointer;
+    }
+
+    #close-chatbot:hover {
+      color: #ddd;
+    }
+
+    .question-btn {
+      margin: 5px 0;
+      padding: 8px;
+      background-color: #bc2414;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      width: 100%;
+      text-align: left;
+    }
+
+    .question-btn:hover {
+      background-color: #bc2414;
+    }
+/* Estilo para el contenedor de los mensajes */
+#chatbot-body {
+  flex: 1;
+  padding: 10px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px; /* Espacio entre los mensajes */
+}
+
+/* Estilo para los mensajes del usuario */
+.user-message {
+  align-self: flex-start; /* Alinea el mensaje a la izquierda */
+  background-color: #e0f7fa; /* Color de fondo del mensaje del usuario */
+  color: #bc2414; /* Color del texto */
+  padding: 10px;
+  border-radius: 10px;
+  max-width: 80%; /* Limita el tamaño del mensaje */
+  word-wrap: break-word;
+  font-size: 16px;
+  margin-bottom: 5px; /* Espacio inferior entre mensajes */
+}
+
+/* Estilo para los mensajes del bot */
+.bot-message {
+  align-self: flex-end; /* Alinea el mensaje a la derecha */
+  background-color: #c8e6c9; /* Color de fondo del mensaje del bot */
+  color: #bc2414; /* Color del texto */
+  padding: 10px;
+  border-radius: 10px;
+  max-width: 80%; /* Limita el tamaño del mensaje */
+  word-wrap: break-word;
+  font-size: 16px;
+  margin-bottom: 5px; /* Espacio inferior entre mensajes */
+}
+
+/* Estilo para los nombres de los participantes */
+.user-name {
+  font-weight: bold;
+  color: #bc2414;
+}
+
+.bot-name {
+  font-weight: bold;
+  color: #bc2414;
+}
+
+/* Opcional: Estilo para mostrar los nombres de usuario y bot en la parte superior */
+.message-header {
+  font-size: 14px;
+  margin-bottom: 5px;
+}
+
+.shadow-container {
+  position: absolute; /* Posición absoluta para que lo puedas mover */
+  top: 0; /* Ajusta según necesites */
+  left: 0;
+  width: 100%; /* Cubre todo el ancho */
+  height: 100%; /* Cubre todo el alto */
+  background-color: rgba(255, 0, 0, 0.5); /* Sombra roja semitransparente */
+  pointer-events: none; /* Permite que los clics pasen al contenido debajo */
+  z-index: 1; /* Ajusta para que quede encima del video */
+}
+
+ </style>
+</head>
+
+<body style="background-color: rgb(255, 255, 255);">
+
+  <div class="site-wrap">
+
+    <div class="site-mobile-menu site-navbar-target">
+      <div class="site-mobile-menu-header">
+        <div class="site-mobile-menu-close">
+          <span class="icon-close2 js-menu-toggle"></span>
+        </div>
+      </div>
+      <div class="site-mobile-menu-body"></div>
+    </div>
+    
+    <header class="site-navbar py-4" role="banner">
+      <div class="container">
+        <div class="d-flex align-items-center">
+          <div class="site-logo">
+            <a href="index.html">
+              <h1></h1>
+            </a>
+          </div>
+          <div class="ml-auto">
+            <nav class="site-navigation position-relative text-right" role="navigation">
+              <ul class="site-menu main-menu js-clone-nav mr-auto d-none d-lg-block">
+                <li class="active"><a href="index.html" class="nav-link">Inicio</a></li>
+                <li><a href="partidos.html" class="nav-link">Partidos</a></li>
+                <li><a href="jugadores.html" class="nav-link">Jugadores</a></li>
+                <li><a href="noticias.html" class="nav-link">Noticias</a></li>
+                <li><a href="galeria.html" class="nav-link">Galeria</a></li>
+                <li><a href="nosotros.html" class="nav-link">Nosotros</a></li>
+                <li id="loginRegisterLinks">
+                  <a href="index2.html" onclick="toggleForms()">Iniciar Sesión</a>
+                  <a href="index2.html" onclick="toggleForms()">Registrarse</a>
+                </li>
+                <li id="perfilLink" style="display:none;">
+                  <a href="perfil.html">
+                    <i class="icono-perfil"></i> Mi Perfil
+                  </a>
+                </li>
+              </ul>
+            </nav>
+            <a href="#" class="d-inline-block d-lg-none site-menu-toggle js-menu-toggle text-black float-right text-white">
+              <span class="icon-menu h3 text-white"></span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </header>
+    
+    <div class="shadow-container"></div>
+
+
+
+
+
+
+
+    <div class="hero fade-in-slide">
+      <video autoplay muted loop id="background-video" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: -1;">
+        <source src="video1.mp4" type="video/mp4">
+        Tu navegador no soporta el elemento de video.
+      </video>
+      
+      <!-- Escudo al final del video -->
+      <div class="escudo-container fade-in-slide-top">
+        <img src="images/escudo2.png" alt="Escudo" class="escudo">
+      </div>
+    
+      <div class="container fade-in-slide">
+        <div class="row align-items-center fade-in-slide-top">
+          <div class="col-lg-5 mx-auto text-center">
+            <h1 class="text-white">Club Deportivo Valledupar</h1>
+            <p>El equipo de todos</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+    <script src="fondo.js"></script>
+    
+    
+    
+    <!-- Contenido del formulario de contacto -->
+    
+   
+    <main>
+      <!-- Botón flotante para abrir el chat -->
+      <div id="chatbot-button">💬</div>
+    
+      <!-- Contenedor del chatbot -->
+      <div id="chatbot-container">
+        <div id="chatbot-header">
+          <h2>DPV.BOT</h2>
+          <button id="close-chatbot">X</button>
+        </div>
+        <div id="chatbot-body">
+          <div id="predefined-questions">
+            <button class="question-btn" onclick="answerQuestion('¿Cómo puedo unirme al equipo?')">como puedo unirme al equipo?</button>
+            <button class="question-btn" onclick="answerQuestion('¿Dónde practica el Deportivo Valledupar?')">¿Dónde practica el Deportivo Valledupar?</button>
+            <button class="question-btn" onclick="answerQuestion('cuantas categorias hay?')">¿cuantas categorias hay en el equipo?</button>
+            <button class="question-btn" onclick="answerQuestion('¿donde esta la oficina de deportivo valledupar?')">¿Dónde esta la ofina de deportivo valledupar</button>
+          </div>
+          <div id="chat-response"></div>
+        </div>
+        <div id="chatbot-input">
+          <input type="text" id="user-input" placeholder="Escribe tu pregunta...">
+          <button id="send-btn">Enviar</button>
+        </div>
+      </div>
+    </main>
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    <div class="site-section  text-white fade-in-slide" style="background-color:  #bc2414 ;">
+      <div class="container text-center">
+        <h2 class="heading fade-in-slide-top">El Equipo de Todos</h2>
+        <p class="mb-4 fade-in-slide">
+          Desde 2013, el Club Deportivo Valledupar se ha convertido en un símbolo de esfuerzo, pasión y orgullo para nuestra comunidad. ¡Juntos somos más fuertes!
+        </p>
+        <a href="URL_DE_TU_APP" class="download-btn" download>Descargar Aplicación</a>
+        <a href="nosotros.html" class="btn btn-outline-light fade-in-slide-right">Conoce más sobre nosotros</a>
+
+      </div>
+      
+    </div>
+    
+    
+    
+    <style>
+      .download-btn {
+            background-color: #a41f12;
+            color: white;
+            padding: 15px 32px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+        }
+        .download-btn:hover {
+            background-color:#a41f12 ;
+            text-align: center;
+        }
+    </style>
+    <div class="site-section fade-in-slide">
+      <div class="container">
+        <div class="row justify-content-center text-center mb-5">
+          <div class="col-md-8 fade-in-slide-top">
+            <h2 class="heading" style="color: black;">Momentos</h2>
+            <p>
+                de nuestro equipo 
+            </p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-4 col-md-6 mb-4 fade-in-slide">
+            <a href="images/A1.jpg" data-fancybox="gallery">
+              <img src="images/A1.jpg" alt="Galería 1" class="img-fluid rounded">
+            </a>
+          </div>
+          <div class="col-lg-4 col-md-6 mb-4 fade-in-slide-right">
+            <a href="images/A2.jpg" data-fancybox="gallery">
+              <img src="images/A2.jpg" alt="Galería 2" class="img-fluid rounded">
+            </a>
+          </div>
+          <div class="col-lg-4 col-md-6 mb-4 fade-in-slide">
+            <a href="images/A3.jpg" data-fancybox="gallery">
+              <img src="images/A3.jpg" alt="Galería 3" class="img-fluid rounded">
+            </a>
+          </div>
+        </div>
+        <div class="text-center mt-4 fade-in-slide-top">
+          <a href="galeria.html" class="btn fade-in-slide" style="background-color:  #bc2414 ; color: white;">Ver más imágenes</a>
+        </div>
+      </div>
+    </div>
+    
+
+ 
+    
+  
+ 
+  
+ 
+           
+          </div>
+        </div>
+      </div>
+    </div> <!-- .site-section -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.css">
+    <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.js"></script>
+    <div class="site-section fade-in-slide" style="background-color: #bc2414;">
+      <div class="container" style="color: aliceblue;">
+        <div class="row justify-content-center text-center mb-5 fade-in-slide-top">
+          <div class="col-md-8" style="color: aliceblue;">
+            <h2>Videos</h2>
+            <p>
+              Disfruta de nuestros mejores momentos en video. Haz clic en el botón de reproducción para ver el contenido completo.
+            </p>
+          </div>
+        </div>
+    
+        <div class="row">
+          <!-- Video 1 -->
+          <div class="col-lg-4 col-md-6 mb-4 fade-in-slide">
+            <div class="video-item">
+              <video id="video1" class="video-responsive rounded" controls>
+                <source src="videos/dpvvideo1.mp4" type="video/mp4">
+                Tu navegador no soporta el reproductor de video.
+              </video>
+              <div class="caption mt-3">
+                <h4 class="m-0" style="color: white;">deportivo</h4>
+              </div>
+            </div>
+          </div>
+    
+          <!-- Video 2 -->
+          <div class="col-lg-4 col-md-6 mb-4 fade-in-slide-right">
+            <div class="video-item">
+              <video id="video2" class="video-responsive rounded" controls>
+                <source src="videos/video22.mp4" type="video/mp4">
+                Tu navegador no soporta el reproductor de video.
+              </video>
+              <div class="caption mt-3">
+                <h4 class="m-0" style="color: white;">deportiva</h4>
+              </div>
+            </div>
+          </div>
+    
+          <!-- Video 3 -->
+          <div class="col-lg-4 col-md-6 mb-4 fade-in-slide">
+            <div class="video-item">
+              <video id="video3" class="video-responsive rounded" controls>
+                <source src="videos/dpvvideo1.mp4" type="video/mp4">
+                Tu navegador no soporta el reproductor de video.
+              </video>
+              <div class="caption mt-3">
+                <h4 class="m-0" style="color: white;">deportivo</h4>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <style>
+      /* Estilos para ajustar los videos */
+      .video-responsive {
+    width: 100%; /* Mantiene el ancho completo del contenedor */
+    height: 300px; /* Aumenta un poco más la altura de los videos */
+    object-fit: cover; /* Recorta el contenido para ajustarse al tamaño definido */
+}
+
+@media (max-width: 768px) {
+    .video-responsive {
+        height: 250px; /* Un tamaño ligeramente mayor para pantallas pequeñas */
+    }
+}
+
+
+    </style>
+    
+    <script>
+      // Asegurarnos de que los videos muestren el primer frame al cargarse
+      document.addEventListener('DOMContentLoaded', () => {
+        const videos = document.querySelectorAll('video');
+        videos.forEach(video => {
+          video.addEventListener('loadeddata', () => {
+            video.currentTime = 0; // Mostrar el primer frame
+            video.pause(); // Detener el video
+          });
+        });
+      });
+    </script>
+    
+    
+    
+    
+    
+
+    <div class="site-section bg-light fade-in-slide">
+      <div class="container">
+        <div class="row justify-content-center text-center mb-5 fade-in-slide-top">
+          <div class="col-md-8">
+            <h2 class="heading">Conoce a Nuestros Jugadores</h2>
+            <p style="color: black;">
+              Descubre a los talentos que representan con orgullo al Deportivo Valledupar en cada encuentro.
+            </p>
+            <a href="jugadores.html" class="btn  mt-3 fade-in-slide" style="color: #bc2414;">Ver todos los jugadores</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+<!-- Banner Horizontal con texto en movimiento dentro de las líneas -->
+<div class="banner fade-in-slide">
+  <!-- Foto en el Banner -->
+  <img src="images/escudo2.png" alt="Foto del equipo" class="banner-photo fade-in-slide">
+
+  <!-- Texto y Botón debajo de la foto -->
+  <div class="banner-text fade-in-slide-top">
+    <h2 style="color: #000000;">¡ÚNETE AL EQUIPO!</h2>
+    <p style="color: #0a0a0a;">
+      Forma parte del Club Deportivo Valledupar y vive la pasión del fútbol.
+    </p>
+    <a href="nosotros.html" class="btn-join fade-in-slide" style="background-color: #bc2414; color: #000000;">¡Únete Ahora!</a>
+  </div>
+</div>
+
+
+<style>
+  /* Estilo para el banner horizontal */
+  /* Estilo para el banner horizontal */
+.banner {
+  width: 100%;
+  text-align: center;
+  position: relative; /* Necesario para posicionar las líneas en el fondo */
+  overflow: hidden; /* Evita que el texto se desborde fuera del contenedor */
+}
+
+/* Fondo con líneas diagonales rojas y blancas que se mueven */
+.banner::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: repeating-linear-gradient(45deg, #bc2414 0%, #bc2414 150px, #ffffff 150px, #ffffff 300px); /* Líneas más gruesas (aproximadamente 4 cm) */
+  animation: move-lines 5s linear infinite; /* Animación para mover las líneas */
+  z-index: -2; /* Para que el fondo no cubra el contenido */
+}
+
+/* Animación de las líneas diagonales */
+@keyframes move-lines {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 100% 100%;
+  }
+}
+
+/* Estilo para el texto que se mueve con las líneas */
+.banner::after {
+  content: "DEPORTIVO VALLEDUPAR"; /* Texto dentro del fondo */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 60px;
+  color: #2C3E50; /* Cambié el color de las letras a negro */
+  font-weight: bold;
+  white-space: nowrap; /* Evita que el texto se divida en varias líneas */
+  z-index: -1;
+  animation: move-text 5s linear infinite; /* Animación para el texto */
+}
+
+/* Animación del texto */
+@keyframes move-text {
+  0% {
+    transform: translate(-50%, -50%) translateX(-100%); /* Comienza fuera del contenedor */
+  }
+  100% {
+    transform: translate(-50%, -50%) translateX(100%); /* Termina fuera del contenedor */
+  }
+}
+
+/* Estilo de la foto dentro del banner (Reduciendo el tamaño) */
+.banner-photo {
+  width: 50%; /* Ajusta al 50% del ancho del contenedor */
+  height: auto; /* Mantiene la proporción de la imagen */
+  max-width: 200px; /* Tamaño máximo de la imagen */
+  margin: 20px auto; /* Centra horizontalmente y añade espacio superior/inferior */
+  display: block; /* Asegura que se comporte como un bloque centrado */
+}
+
+/* Estilo del texto y el botón */
+.banner-text {
+  color: rgb(0, 0, 0);
+  padding: 20px;
+   /* Fondo semitransparente para el texto */
+}
+
+.banner-text h2 {
+  font-size: 28px;
+  margin-bottom: 10px;
+}
+
+.banner-text p {
+  font-size: 18px;
+  margin-bottom: 20px;
+}
+
+.btn-join {
+  padding: 10px 20px;
+  background-color: #fff;
+  color: #007bff;
+  text-decoration: none;
+  font-weight: bold;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.btn-join:hover {
+  background-color: #0056b3;
+  color: white;
+}
+
+</style>
+
+
+<section class="news-promo fade-in-slide">
+  <div class="container">
+    <div class="promo-header fade-in-slide-top">
+      <h2>¡Mira nuestras noticias!</h2>
+      <p>Mantente actualizado con todo lo que está sucediendo en el Club Deportivo Valledupar.</p>
+      <a href="noticias.html" class="btn-promo fade-in-slide">Ver Noticias</a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .news-promo {
+    background-color: #f9f9f9;
+    padding: 60px 20px;
+    text-align: center;
+  }
+
+  .news-promo .promo-header h2 {
+    font-size: 32px;
+    color: #bc2414;
+    margin-bottom: 10px;
+  }
+
+  .news-promo .promo-header p {
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 40px;
+  }
+
+  .btn-promo {
+    display: inline-block;
+    background-color: #bc2414;
+    color: white;
+    font-size: 16px;
+    padding: 10px 20px;
+    margin-top: 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+  }
+
+  .btn-promo:hover {
+    background-color: #a41f12;
+  }
+</style>
+
+
+
+
+<footer class="footer-section">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-3 col-md-6 mb-4">
+        <div class="widget">
+          <h3>Otros</h3>
+          <ul class="list-unstyled links">
+            <li><a href="players.html">Jugadores</a></li>
+            <li><a href="contact.html">Contáctanos</a></li>
+            <li><a href="single.html">Únete</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="col-lg-3 col-md-6 mb-4">
+        <div class="widget">
+          <h3>Partidos</h3>
+          <ul class="list-unstyled links">
+            <li><a href="matches.html">Partidos</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="col-lg-3 col-md-6 mb-4">
+        <div class="widget">
+          <h3>Redes Sociales</h3>
+          <ul class="list-unstyled social-links">
+            <li><a href="https://www.facebook.com/Deportivovalledupar?mibextid=ZbWKwL"><i class="fab fa-facebook-f"></i> Facebook</a></li>
+            <li><a href="https://www.instagram.com/club_deportivo_valledupar_?igsh=cGZvaWh2NWRmamlj"><i class="fab fa-instagram"></i> Instagram</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="col-lg-3 col-md-6 mb-4">
+        <div class="widget">
+          <img src="images/escudo2.png" alt="Logo" class="footer-logo">
+        </div>
+      </div>
+    </div>
+
+    <div class="row text-center">
+      <div class="col-md-12">
+        <div class="pt-5">
+          <p>
+            <script>
+              document.write(new Date().getFullYear());
+            </script> El Equipo De Todos.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+<style>
+  .footer-section {
+  background-color: #2C3E50; /* Fondo oscuro para el pie de página */
+  color: white; /* Texto blanco */
+  padding: 40px 0; /* Espaciado superior e inferior */
+}
+
+.footer-section .widget h3 {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.footer-section .links li {
+  margin-bottom: 10px;
+}
+
+.footer-section .links a {
+  color: #ecf0f1;
+  text-decoration: none;
+}
+
+.footer-section .links a:hover {
+  color: #f39c12;
+}
+
+.footer-section .social-links li {
+  margin-bottom: 10px;
+}
+
+.footer-section .social-links a {
+  color: #ecf0f1;
+  text-decoration: none;
+  font-size: 18px;
+}
+
+.footer-section .social-links a:hover {
+  color: #f39c12;
+}
+
+.footer-section .footer-logo {
+  max-width: 120px; /* Ajusta el tamaño del logo */
+  display: block;
+  margin: 0 auto;
+}
+
+@media (max-width: 991px) {
+  .footer-section .row {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 767px) {
+  .footer-section .widget {
+    text-align: center;
+  }
+
+  .footer-section .footer-logo {
+    margin: 20px auto;
+  }
+}
+
+
+
+
+
+
+
+</style>
+
+
+<div id="install-message" style="display: none;">
+  <p>¡Agrega nuestra app a tu dispositivo para tenerla en tu pantalla de inicio!</p>
+  <button id="install-btn">Instalar</button>
+</div>
+
+<script>
+  let deferredPrompt; // Variable para almacenar el evento beforeinstallprompt
+
+  // Mostrar el mensaje de instalación cuando se detecte la posibilidad de instalación
+  window.addEventListener('beforeinstallprompt', (event) => {
+    // Previene el comportamiento por defecto (que el navegador lo muestre automáticamente)
+    event.preventDefault();
+    // Guarda el evento para ser usado más tarde
+    deferredPrompt = event;
+    
+    // Muestra el mensaje de instalación
+    document.getElementById('install-message').style.display = 'block';
+    
+    // Mostrar el mensaje solo si la opción de instalación es válida
+    const installBtn = document.getElementById('install-btn');
+    installBtn.addEventListener('click', () => {
+      // Muestra el prompt para la instalación
+      deferredPrompt.prompt();
+      
+      // Espera la respuesta del usuario
+      deferredPrompt.userChoice.then((choiceResult) => {
+        if (choiceResult.outcome === 'accepted') {
+          console.log('El usuario ha instalado la PWA');
+        } else {
+          console.log('El usuario no ha instalado la PWA');
+        }
+        deferredPrompt = null; // Resetea el evento para evitar que se dispare varias veces
+      });
+    });
+  });
+
+  // Verifica si la PWA ya está instalada (por ejemplo, si el usuario ya la agregó a su pantalla de inicio)
+  window.addEventListener('appinstalled', () => {
+    console.log('La aplicación ha sido instalada');
+  });
+</script>
+
+  <!-- Firebase Scripts -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+
+  <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
+  <script src="script.js"></script>
+  <script src="menuv.js"></script>
+  <script src="animacion.js"></script>
+  <script src="chat.js"></script>
+  
+  
+  <script>
+    // Verificar el estado de autenticación
+    auth.onAuthStateChanged((user) => {
+      const loginRegisterLinks = document.getElementById('loginRegisterLinks');
+      const perfilLink = document.getElementById('perfilLink');
+
+      if (user) {
+        loginRegisterLinks.style.display = 'none';
+        perfilLink.style.display = 'block';
+      } else {
+        loginRegisterLinks.style.display = 'block';
+        perfilLink.style.display = 'none';
+      }
+    });
+  </script>
+  <script>
+    if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/service-worker.js').then((registration) => {
+    console.log('Service Worker registrado con éxito:', registration);
+  }).catch((error) => {
+    console.log('Error al registrar el Service Worker:', error);
+  });
+}
+
+  </script>
+</body>
+</html>
