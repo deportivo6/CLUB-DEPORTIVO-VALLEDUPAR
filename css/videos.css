@@ -1,0 +1,47 @@
+.video-item {
+    position: relative;
+    overflow: hidden;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+  }
+
+  .video-item .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .video-item:hover .overlay {
+    opacity: 1;
+  }
+
+  .video-item .play-button {
+    font-size: 40px;
+    color: #fff;
+    text-decoration: none;
+  }
+
+  .video-item .caption h4 {
+    font-size: 18px;
+    color: #333;
+    text-align: center;
+  }
+
+  .video-item img {
+    width: 100%;
+    height: auto;
+  }
+
+  .site-section {
+    padding: 60px 0;
+  }
+
+  .heading {
+    font-size: 36px;
+    font-weight: bold;
+  }
