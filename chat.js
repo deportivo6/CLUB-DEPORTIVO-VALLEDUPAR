@@ -1416,7 +1416,7 @@ else if (
  });
 
  // Función para manejar las respuestas predeterminadas
- function answerQuestion(question) {
+  function answerQuestion(question) {
    let response = '';
    
    switch(question) {
@@ -1424,7 +1424,7 @@ else if (
        response = 'en el apartado de nosotros al final encontraras un formulario llenalo 😊';
        break;
      case '¿Dónde practica el Deportivo Valledupar?':
-       response = 'en la cancha de futbol de villa mirian  conocida como "la sintetica"';
+       response = 'Horarios de entrenamientos Cancha sintética de fútbol Del barrio villa miriam Comuna 4 valledupar cesar Martes 4:30pm, Miércoles 3:30pm, Jueves 4:30pm, Viernes 6:30pm';
        break;
      case 'cuantas categorias hay?':
        response = 'Jugadores  2014 | Jugadores  2015 | Jugadores  2016 | Jugadores  2018 | Jugadores  Sub 13 A | Jugadores | Sub 13 B, Jugadores | Sub 15 A, Jugadores | Sub 15 B, Jugadores  Sub 17 A | Jugadores  Sub 17 B';
@@ -1440,6 +1440,7 @@ else if (
    // Muestra la respuesta en el chat
    document.getElementById("chat-response").innerHTML = `<p><strong>Respuesta:</strong> ${response}</p>`;
  }
+
 
 
 
