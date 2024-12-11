@@ -226,7 +226,61 @@
   pointer-events: none; /* Permite que los clics pasen al contenido debajo */
   z-index: 1; /* Ajusta para que quede encima del video */
 }
+  .espaciotc {
+      max-width: 1200px;
+      margin: 20px auto;
+      padding: 20px;
+      text-align: center;
+    }
 
+    .title {
+      font-size: 2rem;
+      color: #333;
+      margin-bottom: 20px;
+    }
+
+    .players {
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .player-card {
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      width: 300px;
+      text-align: center;
+      overflow: hidden;
+      transition: transform 0.3s ease;
+    }
+
+    .player-card:hover {
+      transform: scale(1.05);
+    }
+
+    .player-photo {
+      height: 280px;
+      background-size: cover;
+      background-position: center;
+    }
+
+    .player-info {
+      padding: 20px;
+    }
+
+    .player-info h3 {
+      margin: 10px 0;
+      font-size: 1.5rem;
+      color: #555;
+    }
+
+    .player-info p {
+      margin: 5px 0;
+      font-size: 1rem;
+      color: #777;
+    }
  </style>
 </head>
 
@@ -723,6 +777,37 @@
   }
 </style>
 
+<div class="espaciotc">
+  <h1 class="title">Jugadores Destacados del club deportivo valledupar</h1><br><br>
+  <div class="players">
+    <!-- Jugador 1 -->
+    <div class="player-card">
+      <div 
+        class="player-photo" 
+        style="background-image: url('images/cali1.jpg');">
+      </div>
+      <div class="player-info">
+        <h3>Andrés Camilo Córdoba Quintana</h3>
+        <p><strong>Club:</strong> Deportivo Cali</p>
+        <p><strong>Año de nacimiento:</strong> 2007</p>
+      </div>
+    </div>
+    
+    <!-- Jugador 2 -->
+    <div class="player-card">
+      <div 
+        class="player-photo" 
+        style="background-image: url('images/millo.jpg');">
+      </div>
+      <div class="player-info">
+        <h3>Adrián Mauricio Pantoja Aroca</h3>
+        <p><strong>Club:</strong> Millonarios</p>
+        <p><strong>Posición:</strong> Volante extremo zurdo</p>
+        <p><strong>Año de nacimiento:</strong> 2009</p>
+      </div>
+    </div>
+  </div>
+</div>
 
 
 
